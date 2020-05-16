@@ -41,8 +41,8 @@ function pagesToFirebaseHostingRewriteJson(pageDir) {
 
     return sortedRewrites.map(x => {
         return {
-            "source": convertAnyToAsterisk(removeExtension(x)),
-            "destination": removeExtension(x)+".html"
+            "source": "/"+convertAnyToAsterisk(removeExtension(x)),
+            "destination": "/"+removeExtension(x)+".html"
         }
     })
 }
