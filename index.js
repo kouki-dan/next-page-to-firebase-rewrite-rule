@@ -31,9 +31,16 @@ function main() {
     }
 
     const rewrites = pagesToFirebaseHostingRewriteJson("pages");
-    let rewritesJsonStr = JSON.stringify(rewrites, null, indentation + " ".repeat(indentationCount));
-    rewritesJsonStr = rewritesJsonStr.substr(0, rewritesJsonStr.length-1) + indentation + "]";
-
+    const rewritesJsonStr = JSON.stringify(rewrites, null, " ".repeat(indentationCount))
+        .split("\n")
+        .map(x => {
+            // Special case for first line.
+            if (x === "[") {
+                return "[";
+            }
+            return indentation + x;
+        })
+        .join("\n");
     const rewritedFirebaseJson = firebaseJson.substr(0, open) +
         rewritesJsonStr +
         firebaseJson.substr(end+1)
