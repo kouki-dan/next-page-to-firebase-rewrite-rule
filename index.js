@@ -3,11 +3,34 @@
 const fs = require("fs");
 const findPairedBracketInJSON = require("./findPairedBracketInJSON")
 const pagesToFirebaseHostingRewriteJson = require("./pagesToFirebaseHostingRewriteJson")
+const commandLineArgs = require('command-line-args');
+const watch = require('watch')
 
-const indentationCount = 2;
+const optionDefinitions = [
+  {
+    name: "pagesPath",
+    type: String,
+    defaultValue: "pages",
+  },
+  {
+    name: "firebaseJsonPath",
+    type: String,
+    defaultValue: "firebase.json",
+  },
+  {
+    name: "watch",
+    type: Boolean,
+  },
+  {
+    name: "indentationCount",
+    type: Number,
+    defaultValue: 2
+  }
+];
+const options = commandLineArgs(optionDefinitions);
 
 function main() {
-    const firebaseJson = fs.readFileSync("firebase.json", "utf8");
+    const firebaseJson = fs.readFileSync(options.firebaseJsonPath, "utf8");
 
     const targetKey = "\"rewrites\"";
     const rewritesStartIndex = firebaseJson.search(targetKey);
@@ -30,8 +53,8 @@ function main() {
         }
     }
 
-    const rewrites = pagesToFirebaseHostingRewriteJson("pages");
-    const rewritesJsonStr = JSON.stringify(rewrites, null, " ".repeat(indentationCount))
+    const rewrites = pagesToFirebaseHostingRewriteJson(options.pagesPath);
+    const rewritesJsonStr = JSON.stringify(rewrites, null, " ".repeat(options.indentationCount))
         .split("\n")
         .map(x => {
             // Special case for first line.
@@ -44,7 +67,18 @@ function main() {
     const rewritedFirebaseJson = firebaseJson.substr(0, open) +
         rewritesJsonStr +
         firebaseJson.substr(end+1)
-    fs.writeFileSync("firebase.json", rewritedFirebaseJson);
+    fs.writeFileSync(options.firebaseJsonPath, rewritedFirebaseJson);
 }
 
-main()
+main();
+
+if (options.watch) {
+    watch.createMonitor(options.pagesPath, function (monitor) {
+        monitor.on("created", function (f, stat) {
+            main()
+        })
+        monitor.on("removed", function (f, stat) {
+            main()
+        })
+    })
+}
