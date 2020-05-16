@@ -2,7 +2,7 @@
 
 # Run
 ```bash
-npx next-page-to-firebase-rewrite-rule
+npx @kouki-dan/next-page-to-firebase-rewrite-rule
 ```
 
 # Run under development in this repository
