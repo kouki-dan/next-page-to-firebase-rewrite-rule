@@ -1,6 +1,6 @@
 {
   "name": "next-page-to-firebase-rewrite-rule",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Convert Next.js's pages directory structure into Firebase Hosting rewrite rules.",
   "main": "index.js",
   "scripts": {
