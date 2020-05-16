@@ -7,7 +7,7 @@
     "test": "jest"
   },
   "bin": {
-    "next-page-to-firebase-write-rule": "index.js"
+    "next-page-to-firebase-rewrite-rule": "index.js"
   },
   "repository": {
     "type": "git",
