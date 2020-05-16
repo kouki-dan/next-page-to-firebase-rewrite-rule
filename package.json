@@ -1,0 +1,28 @@
+{
+  "name": "next-page-to-firebase-rewrite-rule",
+  "version": "1.0.0",
+  "description": "Convert Next.js's pages directory structure into Firebase Hosting rewrite rules.",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "bin": {
+    "next-page-to-firebase-write-rule": "index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/kouki-dan/next-page-to-firebase-rewrite-rule.git"
+  },
+  "author": "Kouki Saito",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/kouki-dan/next-page-to-firebase-rewrite-rule/issues"
+  },
+  "homepage": "https://github.com/kouki-dan/next-page-to-firebase-rewrite-rule#readme",
+  "devDependencies": {
+    "jest": "^26.0.1"
+  },
+  "dependencies": {
+    "glob": "^7.1.6"
+  }
+}
